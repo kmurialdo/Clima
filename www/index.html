@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
@@ -21,9 +22,8 @@
     <!-- Color theme for statusbar -->
     <!-- <meta name="theme-color" content="#2196f3"> -->
     <meta name="color-scheme" content="light dark">
-
     <!-- Your app title -->
-    <title>My App</title>
+    <title>Clima</title>
     <!-- Path to Framework7 Library CSS -->
     <link rel="stylesheet" href="lib/framework7/framework7-bundle.min.css">
     <!-- Path to icons -->
@@ -36,34 +36,41 @@
     <div id="app">
         <!-- Statusbar overlay -->
         <div class="statusbar"></div>
-    
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
-
-        
-        <!-- Initial Page, "data-name" contains page name -->
+            <!-- Initial Page, "data-name" contains page name -->
             <div data-name="index" class="page">
                 <!-- Scrollable page content -->
-                <div class="page-content text-align-center">
+                <div class="page-content">
                     <div class="block">
-                        <select id="selLoc"name="localidades">
-                            <option value="todas"selected>Todas</option>
-                            </select>
-
+                        <div class="col-50 list">
+                            <ul>
+                                <li>
+                                    <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Search car">
+                                        <select id="selLoc" name="localidades">
+                                            <option value="todas" disabled="false" selected>Elegir Localiad</option>
+                                        </select>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">Localidad</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="display-flex justify-content-center align-content-center"><img class="imgindex" src="img/cilma.png"></div>
                         <div class="block">
-                          <button id="inicio" class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
-                            @click=${load}>
-                            <span class="preloader"></span>
-                            <span>Ver Clima</span>
-                          </button>
+                            <button id="inicio" class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}" @click=${load}>
+                                <span class="preloader"></span>
+                                <span>Ver Clima</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/framework7-bundle.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
