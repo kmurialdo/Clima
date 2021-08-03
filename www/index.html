@@ -38,39 +38,66 @@
         <div class="statusbar"></div>
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
+
             <!-- Initial Page, "data-name" contains page name -->
             <div data-name="index" class="page">
                 <!-- Scrollable page content -->
-                <div class="page-content">
-                    <div class="block">
-                        <div class="col-50 list">
+                <div class="page-content text-align-center">
+                    <div class="block no-margin display-flex flex-direction-column justify-content-space-between" style="width: 100vw;height: 100vh;">
+                        <video src="img/skyfondo.mp4" autoplay loop></video>
+                        <div id="divtitular">
+                            <h2>Abracen mucho</h2>
+                            <h2>que el tiempo vuela</h2>
+                        </div>
+                        <div class="align-items-center"><img class="imgindex" src="img/cilma.png"></div>
+                        <div class="list" id="divlocalidad">
                             <ul>
                                 <li>
-                                    <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Search car">
+                                    <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Elige tu localidad">
                                         <select id="selLoc" name="localidades">
                                             <option value="todas" disabled="false" selected>Elegir Localiad</option>
                                         </select>
                                         <div class="item-content">
                                             <div class="item-inner">
-                                                <div class="item-title">Localidad</div>
+                                                <div class="item-title text-align-center">Localidad</div>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="display-flex justify-content-center align-content-center"><img class="imgindex" src="img/cilma.png"></div>
                         <div class="block">
-                            <button id="inicio" class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}" @click=${load}>
+                            <button id="IraClima" class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}" @click=${load}>
                                 <span class="preloader"></span>
                                 <span>Ver Clima</span>
                             </button>
+                        </div>
+                        <div>
+                            <p class="no-margin">SimpleClima</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyATzqn4gCEaH0oTYOpCvdBscOLyp_tcvoE",
+        authDomain: "clima-9cefc.firebaseapp.com",
+        projectId: "clima-9cefc",
+        storageBucket: "clima-9cefc.appspot.com",
+        messagingSenderId: "820311642743",
+        appId: "1:820311642743:web:cc40ad2273d6f63791ac72"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    </script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/framework7-bundle.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>

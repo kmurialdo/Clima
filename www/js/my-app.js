@@ -13,10 +13,10 @@
           swipe: 'left',
       },
       // Add default routes
-      routes: [{
-          path: '/about/',
-          url: 'about.html',
-      }, ]
+      routes: [
+          { path: '/index/', url: 'index.html', },
+          { path: '/pgclima/', url: 'pgclima.html', },
+      ]
       // ... other parameters
   });
 
@@ -24,11 +24,8 @@
 
 
   //VARIABLES GLOBALES
-  var DatosenJson = [];
-  var IdLocalidad = "";
-  var localidad = "";
-
-
+  var Localidad = "";
+ 
   // Handle Cordova Device Ready Event
   $$(document).on('deviceready', function() {
       console.log("Device is ready!");
@@ -44,77 +41,82 @@
   // Option 2. Using live 'page:init' event handlers for each page
   $$(document).on('page:init', '.page[data-name="index"]', function(e) {
 
-      fetch("city.list.min.json")
-          .then(response => response.json())
-          .then(function(json) {
-              for (var i = 0; i < json.length; i++) {
-                  //console.log(json[i].country);
-                  if (json[i].country == "AR") {
-                      $$("#selLoc").append('<option value="' + json[i].id + '">' + json[i].name + '</option>')
-                  }
-              }
-          });
-
-
-      /*var url="https://ws.smn.gob.ar/map_items/forecast/1";
-      app.request.json(url, function(datos){
-          for (var i=0; i<datos.length; i++) {
-              //console.log("hola");
-              console.log(datos[i].name)
-              $$("#selLoc").append('<option value="'+datos[i].name+'">'+datos[i].name+'</option>')
-          }
-
-        
-      })*/
-      $$("#inicio").on('click', fnmostrar)
-  })
-
-  $$(document).on('page:init', '.page[data-name="about"]', function(e) {
-      $$("#volver").on('click', fnvolver);
-      console.log("ID=  " + IdLocalidad);
-      var url = "https://api.openweathermap.org/data/2.5/weather?id=" + IdLocalidad + "&appid=e6ebf83d68b3c2697fe3f937664d95a6&lang=es";
+      var url = "https://ws.smn.gob.ar/map_items/forecast/1"; 
       app.request.json(url, function(datos) {
-
-          /*for (var i=0; i<datos.length; i++) {
-              if(datos[i].name == localidad) {*/
-          $$("#localidad").html(datos.name);
-          //$$("#provincia").html(datos[i].province);
-          minima = parseInt(datos.main.temp_min - 273.15)
-          maxima = parseInt(datos.main.temp_max - 273.15)
-          $$("#temp_m").html(minima + " °C");
-          $$("#temp_t").html(maxima + " °C");
-          $$("#img_m").attr('src', 'http://openweathermap.org/img/wn/01d@2x.png');
-          $$("#img_t").attr('src', 'http://openweathermap.org/img/wn/' + datos.weather[0].icon + 'd@2x.png');
-          $$("#desc_m").html(datos.weather[0].description);
-          //$$("#desc_t").html(datos[i].weather.afternoon_desc);
-
-
-          /*    }
-          }*/
+          for (var i = 0; i < datos.length; i++) {
+              //console.log("hola");
+              //console.log(datos[i].name)
+              $$("#selLoc").append('<option value="' + datos[i].name + '">' + datos[i].name + '</option>')
+          }
 
 
       })
+      $$("#IraClima").on('click', fnmostrar)
+  })
+
+  $$(document).on('page:init', '.page[data-name="pgclima"]', function(e) {
+      console.log("ID=  " + Localidad);
+      //DIA 1
+      var url = "https://ws.smn.gob.ar/map_items/forecast/1";
+      app.request.json(url, function(datos) {
+
+          for (var i = 0; i < datos.length; i++) {
+              if (datos[i].name == Localidad) {
+                  $$("#localidad").html(datos[i].name);
+                  $$("#provincia").html(datos[i].province);
+                  //
+                  $$("#dia1temp_m").html(datos[i].weather.morning_temp + " °C");
+                  $$("#dia1temp_t").html(datos[i].weather.afternoon_temp + " °C");
+                  $$("#dia1img_m").attr('src', 'https://www.smn.gob.ar/sites/all/themes/smn/img/weather-icons/25.png');
+                  $$("#dia1img_t").attr('src', 'https://www.smn.gob.ar/sites/all/themes/smn/img/weather-icons/26.png');
+                  $$("#dia1desc_m").html(datos[i].weather.morning_desc);
+                  $$("#dia1desc_t").html(datos[i].weather.afternoon_desc);
+
+
+              }
+          }
+
+
+      });
+
+      //DIA 2
+      var url = "https://ws.smn.gob.ar/map_items/forecast/2";
+      app.request.json(url, function(datos2) {
+
+          for (var i = 0; i < datos2.length; i++) {
+              if (datos2[i].name == Localidad) {
+                  $$("#dia2temp_m").html(datos2[i].weather.morning_temp + " °C");
+                  $$("#dia2temp_t").html(datos2[i].weather.afternoon_temp + " °C");
+                  $$("#dia2img_m").attr('src', 'https://www.smn.gob.ar/sites/all/themes/smn/img/weather-icons/25.png');
+                  $$("#dia2img_t").attr('src', 'https://www.smn.gob.ar/sites/all/themes/smn/img/weather-icons/26.png');
+                  $$("#dia2desc_m").html(datos2[i].weather.morning_desc);
+                  $$("#dia2desc_t").html(datos2[i].weather.afternoon_desc);
+
+
+              }
+          }
+
+
+      });
   })
 
 
 
   //FUNCIONES
   function fnmostrar() {
-      IdLocalidad = $$("#selLoc").val();
-      if (IdLocalidad == "todas") {
-          toastFaltaElegir = app.toast.create({
-              text: 'Por favor, selecciona una localidad',
-              position: 'center',
-              closeTimeout: 2000,
-          });
-          toastFaltaElegir.open();
+      Localidad = $$("#selLoc").val();
+      if (Localidad == "todas") {
+           toastFaltaElegir = app.toast.create({
+               text: 'Por favor, selecciona una localidad',
+               position: 'center',
+               closeTimeout: 2000,
+           });
+           toastFaltaElegir.open();
 
-      } else {
+       } else {
+         mainView.router.navigate('/pgclima/');
+           
+       }
+     
 
-          mainView.router.navigate('/about/');
-      }
-  }
-
-  function fnvolver() {
-      mainView.router.navigate('/index/');
   }
